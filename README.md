@@ -6,9 +6,33 @@ Jev Governor is a proposed local-first companion for coding sessions. It observe
 
 ## Status
 
-**Documentation foundation only, prepared 2026-09-24.** There is no executable package, live-qualified integration, trained policy, or demonstrated saving in this commit. Commands described below and in the specifications are implementation targets, not commands that already work. Do not present this repository as a released product.
+**Testing-ready alpha (branch `spark/testing-ready-alpha`, 2026-09-24).**
+Working offline CLI: synthetic demo, evidence ledger, usage accounting,
+deterministic recommendations, Codex CLI probe + rollout import, bounded Jev
+client (disabled by default), and a supervised shadow predictor. No
+live-qualified integration, no trained production policy, no demonstrated
+saving. See [acceptance checklist](docs/ACCEPTANCE_ALPHA.md) for exact
+evidence and [evaluation labels](docs/EVALUATION.md) for what each claim
+requires. Do not present this repository as a released product.
 
-The first implementation assignment is [the Muse Spark testing-ready prompt](docs/prompts/muse-spark-testing-ready.md). Read [AGENTS.md](AGENTS.md) before changing the repository.
+The implementation assignment is [the Muse Spark testing-ready prompt](docs/prompts/muse-spark-testing-ready.md). Read [AGENTS.md](AGENTS.md) before changing the repository.
+
+## Quickstart (tested 2026-09-24, Windows, Python 3.12 and 3.14)
+
+```powershell
+uv venv; uv pip install -e ".[dev]"   # or: python -m venv .venv; .venv\Scripts\pip install -e ".[dev]"
+python -m jev_governor doctor          # environment + capability report, no secrets
+python -m jev_governor demo            # one-command synthetic offline demo
+python -m jev_governor inspect demo-loop
+python -m jev_governor recommend demo-loop
+python -m jev_governor report demo-loop
+pytest tests -q                        # 76 tests, provider traffic blocked
+ruff check src tests; ruff format --check src tests
+```
+
+Offline commands need no key and no network. `jev-smoke --live`,
+`recommend --with-jev --live`, and `codex-qualify --run` are separate,
+explicit, and bounded; without their flags nothing leaves the machine.
 
 ## The first useful product
 
