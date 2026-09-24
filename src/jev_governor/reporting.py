@@ -170,6 +170,10 @@ def ledger_view(conn: sqlite3.Connection, session_id: str) -> dict[str, Any]:
             }
         )
     totals, cost = summarize_usage(conn, session_id)
+    attribution_note = (
+        "session-level-shared: totals include shared investigation and overhead; "
+        "per-requirement splits are not estimated"
+    )
     budget = session_budget(conn, session_id)
     used = totals.in_tokens + totals.out_tokens
     max_total = budget.get("max_total_tokens")
@@ -215,6 +219,7 @@ def ledger_view(conn: sqlite3.Connection, session_id: str) -> dict[str, Any]:
         "checks": check_views,
         "patches": [{"patch_id": p.patch_id, "paths": p.paths, "seq": p.seq} for p in patches],
         "usage": {
+            "attribution": attribution_note,
             "input_tokens": totals.in_tokens,
             "cached_input_tokens_subset": totals.cached_in_tokens,
             "output_tokens": totals.out_tokens,
@@ -274,6 +279,7 @@ def render_inspect(view: dict[str, Any]) -> str:
         )
     lines.append("")
     usage = view["usage"]
+    lines.append(f"attribution: {usage['attribution']}")
     lines.append(
         f"usage: in={usage['input_tokens']} "
         f"(cached-subset={usage['cached_input_tokens_subset']}) "

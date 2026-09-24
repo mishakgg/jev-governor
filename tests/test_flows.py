@@ -47,6 +47,9 @@ def test_full_workflow_import_to_delete(cli_runner, data_dir):
     text = export_path.read_text(encoding="utf-8")
     assert '"record": "decision"' in text
     assert "TYPESAFE" not in text
+    assert '"propensity": 1.0' in text  # genuine deterministic propensity
+    code, out, _ = cli_runner("inspect", "demo-loop", "--json")
+    assert "session-level-shared" in out  # attribution labeled, not split
     code, out, _ = cli_runner("delete", "--session", "demo-loop")
     assert code == 1  # refuses without --yes
     code, out, _ = cli_runner("delete", "--session", "demo-loop", "--yes")

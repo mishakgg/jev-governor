@@ -91,7 +91,16 @@ def issue_recommendation(
             json.dumps(ctx.permitted),
             decision.selected,
             json.dumps(decision.intended_config),
-            json.dumps({"codes": decision.rationale_codes, "reason": decision.reason}),
+            json.dumps(
+                {
+                    "codes": decision.rationale_codes,
+                    "reason": decision.reason,
+                    # Genuine behavior propensity for the deterministic
+                    # baseline: 1.0 on the chosen action, no support claimed
+                    # for alternatives. Jev probabilities are never stored here.
+                    "propensity": 1.0,
+                }
+            ),
             decision.uncertainty,
             1 if decision.abstained else 0,
             1 if decision.advisory else 0,
