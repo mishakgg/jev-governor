@@ -1,0 +1,8 @@
+{"event_id": "good-e1", "event_type": "session.started", "observed_at": "2026-02-02T09:00:00Z", "payload": {"workspace": "demo://malformed"}, "provenance": "synthetic", "schema_version": 1, "session_id": "test-malformed", "source": "test", "source_version": "1"}
+not json at all
+{"event_id": "bad-e2", "session_id": "test-malformed"}
+{"event_id": "bad-e3", "event_type": "nope.not-real", "observed_at": "2026-02-02T09:01:00Z", "provenance": "synthetic", "schema_version": 1, "session_id": "test-malformed", "source": "test", "source_version": "1"}
+{"event_id": "bad-e4", "event_type": "session.started", "observed_at": "2026-02-02T09:01:00Z", "provenance": "synthetic", "schema_version": 99, "session_id": "test-malformed", "source": "test", "source_version": "1"}
+{"event_id": "bad-e5", "event_type": "session.started", "observed_at": "2026-02-02T09:01:00Z", "provenance": "synthetic", "schema_version": 1, "session_id": "other-session", "source": "test", "source_version": "1"}
+{"event_id": "good-e6", "event_type": "usage.reported", "observed_at": "2026-02-02T09:02:00Z", "payload": {"kind": "delta", "usage": {"input_tokens": 10, "output_tokens": 2}}, "provenance": "synthetic", "schema_version": 1, "session_id": "test-malformed", "source": "test", "source_version": "1"}
+
